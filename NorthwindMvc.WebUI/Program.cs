@@ -3,6 +3,7 @@ using Northwind.Business.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.DataAccess.Concrete.EntityFramework;
 using NorthwindMvc.WebUI.Middlewares;
+using NorthwindMvc.WebUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,15 @@ builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<IProductDal, EfProductDal>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
+builder.Services.AddSingleton<ICartService, CartService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+//Session Mimarimizin eklenmei
+builder.Services.AddSession();
+builder.Services.AddDistributedMemoryCache();
+//Session'ýmýzda kullandýðýmýz httpcontextaccessor'u configure ettik.
+//builder.Services.AddHttpContextAccessor();
 
 
 //custom middleware için parametre göndereceðimiz root yolu deðiþkeni
@@ -33,6 +43,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//Session'ýmýzý ekledik.
+app.UseSession();
 
 //custom middleware'in kullanýlmasý
 app.UseFileServer();

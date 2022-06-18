@@ -9,6 +9,8 @@
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_module/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="/node_module/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
     @*dropdown aksiyonu için bundle.min.js lazım*@
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -34,11 +36,7 @@
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     Dropdown button
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+                @await Component.InvokeAsync("CartSummary")
             </div>
         </nav>
     </div>
@@ -47,6 +45,10 @@
             @await Component.InvokeAsync("CategoryList")
         </div>
         <div class="col-md-10">
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-info" role="alert">@TempData["message"]</div>
+            }
             @RenderBody()
         </div>
     </div>
