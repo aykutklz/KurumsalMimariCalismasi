@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Northwind.Business.Abstract;
 using Northwind.Entities.Concrete;
 using NorthwindMvc.WebUI.Models;
 
 namespace NorthwindMvc.WebUI.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private IProductService _productService;

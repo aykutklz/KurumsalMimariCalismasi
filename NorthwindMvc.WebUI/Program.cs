@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Northwind.Business.Abstract;
 using Northwind.Business.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.DataAccess.Concrete.EntityFramework;
+using NorthwindMvc.WebUI.Entities;
 using NorthwindMvc.WebUI.Middlewares;
 using NorthwindMvc.WebUI.Services;
 
@@ -19,6 +22,9 @@ builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
 builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
 builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddDbContext<CustomIdentityDbContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SchoolDb;Trusted_Connection=true"));
+builder.Services.AddIdentity<CustomIdentityUser,CustomIdentityRole>().AddEntityFrameworkStores<CustomIdentityDbContext>().AddDefaultTokenProviders();
 
 //Session Mimarimizin eklenmei
 builder.Services.AddSession();
@@ -51,10 +57,11 @@ app.UseSession();
 app.UseFileServer();
 app.UseNodeModules(root);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 
 app.Run();
