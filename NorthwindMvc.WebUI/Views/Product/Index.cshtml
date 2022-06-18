@@ -1,8 +1,8 @@
 ﻿@model NorthwindMvc.WebUI.Models.ProductListViewModel
+
 @{
     Layout = "~/Views/_Layout.cshtml";
 }
-
 <div>
     <table class="table table-responsive">
         <tr>
@@ -10,7 +10,7 @@
             <td>Unit Price</td>
             <td>Units In Stock</td>
         </tr>
-        @foreach(var product in Model.Products)
+        @foreach (var product in Model.Products)
         {
             <tr>
                 <td>@product.ProductName</td>
@@ -20,3 +20,8 @@
         }
     </table>
 </div>
+<product-list-pager current-category="@Model.CurrentCategory"
+                    current-page="@Model.CurrentPage"
+                    page-count="@Model.PageCount"
+                    page-size="@Model.PageSize">
+</product-list-pager>

@@ -13,6 +13,9 @@ builder.Services.AddMvc();
 
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<IProductDal, EfProductDal>();
+builder.Services.AddScoped<ICategoryService, CategoryManager>();
+builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+
 
 //custom middleware için parametre göndereceðimiz root yolu deðiþkeni
 var root = builder.Environment.ContentRootPath;

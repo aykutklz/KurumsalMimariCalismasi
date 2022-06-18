@@ -14,7 +14,7 @@ namespace Northwind.Business.Concrete
         private ICategoryDal _categoryDal;
         public CategoryManager(ICategoryDal categoryDal)
         {
-            categoryDal = _categoryDal;
+            _categoryDal = categoryDal;
         }
         public List<Category> GetAll()
         {
