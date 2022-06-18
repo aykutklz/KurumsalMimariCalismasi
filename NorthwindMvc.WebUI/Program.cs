@@ -2,6 +2,7 @@ using Northwind.Business.Abstract;
 using Northwind.Business.Concrete;
 using Northwind.DataAccess.Abstract;
 using Northwind.DataAccess.Concrete.EntityFramework;
+using NorthwindMvc.WebUI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddMvc();
 
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<IProductDal, EfProductDal>();
+
+//custom middleware için parametre göndereceðimiz root yolu deðiþkeni
+var root = builder.Environment.ContentRootPath;
 
 var app = builder.Build();
 
@@ -26,6 +30,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//custom middleware'in kullanýlmasý
+app.UseFileServer();
+app.UseNodeModules(root);
 
 app.UseAuthorization();
 
