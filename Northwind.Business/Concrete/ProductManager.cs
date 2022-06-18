@@ -14,7 +14,7 @@ namespace Northwind.Business.Concrete
         private IProductDal _productDal;
         public ProductManager(IProductDal productDal)
         {
-            productDal = _productDal;
+            _productDal = productDal;
         }
 
         public List<Product> GetAll()
@@ -37,7 +37,7 @@ namespace Northwind.Business.Concrete
 
         public void Delete(int productId)
         {
-            _productDal.Delete(productId);
+            _productDal.Delete(new Product { ProductId= productId});
         }
     }
 }

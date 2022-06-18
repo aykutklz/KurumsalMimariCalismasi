@@ -1,9 +1,17 @@
+using Northwind.Business.Abstract;
+using Northwind.Business.Concrete;
+using Northwind.DataAccess.Abstract;
+using Northwind.DataAccess.Concrete.EntityFramework;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddMvc();
+
+builder.Services.AddScoped<IProductService, ProductManager>();
+builder.Services.AddScoped<IProductDal, EfProductDal>();
 
 var app = builder.Build();
 
